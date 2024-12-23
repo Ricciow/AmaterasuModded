@@ -27,8 +27,6 @@ export default class SliderElementFix extends SliderElement {
         this.nudgeScale = this.settings[0] % 1 !== 0 //Set nudge to fit numbers
             ? Math.max(0.01, Math.pow(10, getMagnitudeScale(this.settings[1])-1))
             : Math.max(1, Math.pow(10, getMagnitudeScale(this.settings[1])-1))
-
-        console.log(this.nudgeScale)
     }
 
     _create(colorScheme = {}) {
@@ -171,7 +169,6 @@ export default class SliderElementFix extends SliderElement {
 
     setValue(value) {
         const percentage = ElementUtils.miniMax(0, 1, (value-this.settings[0]) / (this.settings[1]-this.settings[0]))
-        console.log(value)
         const newValue = ElementUtils.miniMax(this.settings[0], this.settings[1], value)
         this.value = this.settings[0] % 1 !== 0
             ? parseFloat(newValue).toFixed(2)
