@@ -1,6 +1,7 @@
 import { Animations, AspectConstraint, CenterConstraint, ConstantColorConstraint, OutlineEffect, RelativeConstraint, SubtractiveConstraint, UIRoundedRectangle, UIText, animate } from "../../Elementa"
 import ElementUtils from "../../DocGuiLib/core/Element"
 import SliderElement from "../../DocGuiLib/elements/Slider"
+import { getMagnitudeScale } from "../utils"
 
 export default class SliderElementFix extends SliderElement {
     /**
@@ -19,8 +20,15 @@ export default class SliderElementFix extends SliderElement {
 
         this.initialX = this.initialPercent !== 0 ? new SubtractiveConstraint(new RelativeConstraint(this.initialPercent), ((this.sliderBoxHeight/2)).pixels()) : (-(this.sliderBoxHeight/2)).pixels()
         this.focused = false
-        this.value = this.defaultValue
-        this.nudgeScale = 1
+        this.value = this.settings[0] % 1 !== 0
+            ? parseFloat(this.defaultValue).toFixed(2)
+            : parseInt(this.defaultValue)
+
+        this.nudgeScale = this.settings[0] % 1 !== 0 //Set nudge to fit numbers
+            ? Math.max(0.01, Math.pow(10, getMagnitudeScale(this.settings[1])-1))
+            : Math.max(1, Math.pow(10, getMagnitudeScale(this.settings[1])-1))
+
+        console.log(this.nudgeScale)
     }
 
     _create(colorScheme = {}) {
@@ -142,7 +150,9 @@ export default class SliderElementFix extends SliderElement {
         switch (keycode) {
             case 208: // Pressed down arrow key
             case 31:  // Pressed S
-                this.nudgeScale /= 10
+                this.nudgeScale = this.settings[0] % 1 !== 0
+                    ? Math.max(0.01, this.nudgeScale / 10)
+                    : Math.max(1, this.nudgeScale/10)
                 break;
             case 200: // Pressed up arrow key
             case 17:  // Pressed W
@@ -150,18 +160,22 @@ export default class SliderElementFix extends SliderElement {
                 break;
             case 203: // Pressed left arrow key
             case 30:  // Pressed A
-                this.setValue(this.value-1*this.nudgeScale)
+                this.setValue(parseFloat(this.value)-1*this.nudgeScale)
                 break;
             case 205: // Pressed right arrow key
             case 32:  // Pressed D
-                this.setValue(this.value+1*this.nudgeScale)
+                this.setValue(parseFloat(this.value)+1*this.nudgeScale)
                 break;
         }
     }
 
     setValue(value) {
         const percentage = ElementUtils.miniMax(0, 1, (value-this.settings[0]) / (this.settings[1]-this.settings[0]))
-        this.value = ElementUtils.miniMax(this.settings[0], this.settings[1], value)
+        console.log(value)
+        const newValue = ElementUtils.miniMax(this.settings[0], this.settings[1], value)
+        this.value = this.settings[0] % 1 !== 0
+            ? parseFloat(newValue).toFixed(2)
+            : parseInt(newValue)
         this.sliderValue.setText(this.value)
         this.sliderBox.setX(new SubtractiveConstraint(new RelativeConstraint(percentage), ((this.sliderBoxHeight/2)).pixels()))
         this.compBox.setWidth(new RelativeConstraint(percentage))
