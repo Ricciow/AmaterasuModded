@@ -1,0 +1,11 @@
+{
+  "name": "AmaterasuFix",
+  "creator": "Riccio",
+  "entry": "index.js",
+  "version": "1.0.0",
+  "description": "This module is meant to fix the Slider in Amaterasu and add new Features to it.",
+  "requires": [
+    "Amaterasu",
+    "DocGuiLib"
+  ]
+}
