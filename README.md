@@ -7,6 +7,7 @@ Also adds more precise controls to the Slide Bar using A/D or left/right Keys
 Adds Scroll bar to multicheckbox, can change color based off the key "scrollbar"
 inside the schemes so 
 
+Scheme Example:
 
 ```
 "MultiCheckBox": {
@@ -20,20 +21,16 @@ inside the schemes so
 
 Adds Size Change and offset to Checkboxes "Check"
 
+Scheme Example:
 ```
 "Checkbox": {
-    "background": {
-        ...Stuff
-    },
+    ...Other stuff
     "check": {
         "enabled": "§l✓",
         "disabled": "",
         "size": 0.8,
         "xOffset": 3,
         "yOffset": 0
-    },
-    "mouseClickAnimation": {
-        ...Stuff
     }
 }
 ```
