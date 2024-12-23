@@ -1,9 +1,9 @@
-import MultiCheckbox from "../../DocGuiLib/elements/MultiCheckbox"
+import MultiCheckboxOld from "../../DocGuiLib/elements/MultiCheckbox"
 import { UIRoundedRectangle, OutlineEffect, CenterConstraint, UIWrappedText, UIText, CramSiblingConstraint, ScrollComponent} from "../../Elementa"
 import ElementUtils from "../../DocGuiLib/core/Element"
-import CheckboxFix from "./CheckboxFix"
+import CheckboxFix from "./Checkbox"
 
-export default class MultiCheckboxFix extends MultiCheckbox {
+export default class MultiCheckbox extends MultiCheckboxOld {
     constructor(options = [], placeholder = "Click", x, y, width, height) {
         super(options, placeholder, x, y, width, height)
     }

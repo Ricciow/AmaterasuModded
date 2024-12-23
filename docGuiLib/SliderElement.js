@@ -1,9 +1,9 @@
 import { Animations, AspectConstraint, CenterConstraint, ConstantColorConstraint, OutlineEffect, RelativeConstraint, SubtractiveConstraint, UIRoundedRectangle, UIText, animate } from "../../Elementa"
 import ElementUtils from "../../DocGuiLib/core/Element"
-import SliderElement from "../../DocGuiLib/elements/Slider"
+import SliderElementOld from "../../DocGuiLib/elements/Slider"
 import { getMagnitudeScale } from "../utils"
 
-export default class SliderElementFix extends SliderElement {
+export default class SliderElement extends SliderElementOld {
     /**
      * @param {[Number, Number, Number]} settings [Min, Max, Starting Value]
      * @param {Number} x 

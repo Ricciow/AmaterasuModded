@@ -1,7 +1,7 @@
 import { AspectConstraint, RelativeConstraint , AdditiveConstraint, CenterConstraint } from "../../Elementa"
-import CheckboxElement from "../../DocGuiLib/elements/Checkbox"
+import CheckboxElementOld from "../../DocGuiLib/elements/Checkbox"
 
-export default class CheckboxFix extends CheckboxElement {
+export default class CheckboxElement extends CheckboxElementOld {
     constructor(check = false, x, y, width, height, outline = false) {
         super(check, x, y, width, height, outline)
     }
