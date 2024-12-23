@@ -52,7 +52,7 @@ export default class SliderElementFix extends SliderElement {
         this.compBox = new UIRoundedRectangle(this._getSchemeValue("completionbar", "roundness"))
             .setWidth(new RelativeConstraint(this.initialPercent))
             .setHeight((100).percent())
-            // .setColor(this._getColor("completionbar", "color"))
+            .setColor(this._getColor("completionbar", "color"))
             .enableEffect(new OutlineEffect(this._getColor("completionbar", "outlineColor"), this._getSchemeValue("completionbar", "outlineSize")))
             .setChildOf(this.sliderBar)
         
