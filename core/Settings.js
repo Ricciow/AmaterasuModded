@@ -108,4 +108,26 @@ export default class Settings extends SettingsOld {
 
         return this
     }
+
+    _checkScheme(path) {
+        const mainDefaultScheme = JSON.parse(FileLib.read("DocGuiLib", "data/DefaultColors.json"))
+        let defaultScheme = JSON.parse(FileLib.read("AmaterasuModded", "data/_DefaultScheme.json"))
+        let colorScheme = JSON.parse(FileLib.read(this.moduleName, path)) ?? defaultScheme
+
+        if (colorScheme?.Amaterasu?.backgroundBox) {
+            const oldSchemePath = `${path.replace(/\.json/, "")}_old.json`
+            console.warn(`[Amaterasu - ${this.moduleName}] old scheme system detected, your old scheme has been saved as ${oldSchemePath}`)
+
+            this._saveScheme(oldSchemePath, colorScheme)
+            // Reset values since we need it to be a clean new object
+            colorScheme = {}
+        }
+
+        defaultScheme = mergeObjects(defaultScheme, mainDefaultScheme)
+        colorScheme = mergeObjects(colorScheme, defaultScheme)
+
+        this._saveScheme(path, colorScheme)
+
+        return colorScheme
+    }
 }
