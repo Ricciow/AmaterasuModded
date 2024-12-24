@@ -36,6 +36,7 @@ Scheme Example:
 ```
 
 Adds Redirect Visual Indicator
+Note: The duration and delay are applied to both animations.
 
 Scheme Example:
 ```
