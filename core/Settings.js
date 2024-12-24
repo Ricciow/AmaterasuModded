@@ -1,9 +1,10 @@
 import SettingsOld from "../../Amaterasu/core/Settings"
 import SearchElement from "./Search"
-import { UIRoundedRectangle, UIText, OutlineEffect, ScrollComponent, CramSiblingConstraint, CenterConstraint } from "../../Elementa"
+import { UIRoundedRectangle, UIText, OutlineEffect, ScrollComponent, CramSiblingConstraint, CenterConstraint, animate, Animations , ConstantColorConstraint} from "../../Elementa"
 import Category from "./Category"
 import MarkdownElement from "../../DocGuiLib/elements/Markdown"
 import ElementUtils from "../../DocGuiLib/core/Element"
+const Color = Java.type("java.awt.Color")
 
 export default class Settings extends SettingsOld {
     constructor(moduleName, defaultConfig, colorSchemePath, titleText) {
@@ -129,5 +130,55 @@ export default class Settings extends SettingsOld {
         this._saveScheme(path, colorScheme)
 
         return colorScheme
+    }
+
+    redirect(categoryName, configName = null) {
+        const categoryInstance = this.categories.get(categoryName)
+        if (!categoryInstance) throw new Error(`${categoryName} is not a valid category name.`)
+
+        // Reset the state of all the categories
+        this.categories.forEach(value => value._setSelected(false))
+
+        // Set the new category's state
+        this.oldCategory = null
+        this.currentCategory = categoryName
+
+        // Update the state of the given categoryName
+        this.categories.get(this.currentCategory)._setSelected(true)
+
+        if (configName) {
+            Client.scheduleTask(2, () => {
+                const rightBlock = categoryInstance.rightBlock
+                const comp = categoryInstance.createElementClass._find(configName)?.component
+                if (!comp) return
+                
+                const newY = rightBlock.getTop() - comp.getTop()
+                //Modified smooth to false since weird jiggly behaviour
+                categoryInstance.rightBlock.scrollTo(0, newY, false)
+
+                //Added Color Animation
+                const oldColor = comp.getColor()
+                animate(comp, (animation) => {
+                    animation.setColorAnimation(
+                            Animations[this.handler.getColorScheme().Amaterasu.redirect.animationFadeIn],
+                            this.handler.getColorScheme().Amaterasu.redirect.duration,
+                            new ConstantColorConstraint(ElementUtils.getJavaColor(this.handler.getColorScheme().Amaterasu.redirect.color)),
+                            this.handler.getColorScheme().Amaterasu.redirect.delay
+                        )
+                    animation.onComplete(() => {
+                        animate(comp, (animation) => {
+                            animation.setColorAnimation(
+                                Animations[this.handler.getColorScheme().Amaterasu.redirect.animationFadeOut],
+                                this.handler.getColorScheme().Amaterasu.redirect.duration,
+                                new ConstantColorConstraint(oldColor),
+                                this.handler.getColorScheme().Amaterasu.redirect.delay
+                            )
+                        })
+                    })
+                })
+            })
+        }
+
+        return this
     }
 }

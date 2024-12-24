@@ -35,6 +35,20 @@ Scheme Example:
 }
 ```
 
+Adds Redirect Visual Indicator
+
+Scheme Example:
+"Amaterasu": {
+    ...Other Stuff
+    "redirect" : {
+        "color": [255, 255, 255, 51],
+        "animationFadeIn" : "IN_SIN",
+        "animationFadeOut": "OUT_SIN",
+        "duration": 0.1,
+        "delay": 0.2
+    }
+}
+
 # License
 This project includes components licensed under the [Amaterasu Software License](https://github.com/DocilElm/Amaterasu?tab=MIT-1-ov-file).
 

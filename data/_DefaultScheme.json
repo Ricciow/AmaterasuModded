@@ -481,6 +481,13 @@
                 "color": [255, 255, 255, 255],
                 "scale": 1
             }
+        },
+        "redirect" : {
+            "color": [255, 255, 255, 51],
+            "animationFadeIn" : "IN_SIN",
+            "animationFadeOut": "OUT_SIN",
+            "duration": 0.1,
+            "delay": 0.2
         }
     },
     "DividerSubcategory": {
