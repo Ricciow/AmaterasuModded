@@ -38,6 +38,7 @@ Scheme Example:
 Adds Redirect Visual Indicator
 
 Scheme Example:
+```
 "Amaterasu": {
     ...Other Stuff
     "redirect" : {
@@ -48,6 +49,7 @@ Scheme Example:
         "delay": 0.2
     }
 }
+```
 
 # License
 This project includes components licensed under the [Amaterasu Software License](https://github.com/DocilElm/Amaterasu?tab=MIT-1-ov-file).
