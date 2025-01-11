@@ -52,6 +52,12 @@ Scheme Example:
 }
 ```
 
+Fixes setConfigValue to work with multicheckboxes:
+```js
+[settigns].setConfigValue(category, configname, value, multicheckbox)
+```
+multicheckbox being the config name of the checkbox
+
 # License
 This project includes components licensed under the [Amaterasu Software License](https://github.com/DocilElm/Amaterasu?tab=MIT-1-ov-file).
 

@@ -181,4 +181,32 @@ export default class Settings extends SettingsOld {
 
         return this
     }
+
+    /**
+     * 
+     * @param {string} category 
+     * @param {string} configName 
+     * @param {*} value 
+     * @param {string} multiCheckbox Name of the multicheckbox object is at
+     * @returns 
+     */
+    setConfigValue(category, configName, value, multiCheckbox = undefined) {
+        if (!category || !configName || !this.categories.has(category)) throw new Error(`category: ${category} or configName: ${configName} are not valid.`)
+        
+        let finder = multiCheckbox??configName
+
+        let configObj = this.config.find(it => it.category === category)?.settings?.find(it => it.name === finder)
+
+        if(multiCheckbox) {
+            configObj = configObj?.options.find((it) => it.configName === configName)
+        }
+        
+        if (!configObj) return this
+
+        configObj.value = value
+        this.settings = this.configsClass._normalizeSettings()
+        this.apply()
+
+        return this
+    }
 }
