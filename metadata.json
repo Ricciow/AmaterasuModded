@@ -2,7 +2,7 @@
   "name": "AmaterasuModded",
   "creator": "Riccio",
   "entry": "index.js",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "description": "This module is meant to fix the Slider in Amaterasu and add new Features to it.",
   "requires": [
     "Amaterasu",

@@ -198,9 +198,7 @@ export default class Settings extends SettingsOld {
         let configObj = this.config.find(it => it.category === category)?.settings?.find(it => it.name === finder)
 
         if(multiCheckbox) {
-            if(!configObj.options) return this
-            
-            configObj = configObj?.options.find((it) => it.configName === configName)
+            configObj = configObj?.options?.find((it) => it.configName === configName)
         }
         
         if (!configObj) return this
