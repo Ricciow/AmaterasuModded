@@ -4,7 +4,33 @@ import { UIRoundedRectangle, UIText, OutlineEffect, ScrollComponent, CramSibling
 import Category from "./Category"
 import MarkdownElement from "../../DocGuiLib/elements/Markdown"
 import ElementUtils from "../../DocGuiLib/core/Element"
-const Color = Java.type("java.awt.Color")
+
+// Credits to @unclaimedbloom6 (big thank)
+const mergeObjects = (obj1, obj2, final = {}) => {
+    // Add the keys from the first object
+    for (let entry of Object.entries(obj1)) {
+        let [k, v] = entry
+        final[k] = v
+    }
+
+    // Add the keys from the second object
+    for (let entry of Object.entries(obj2)) {
+        let [k, v] = entry
+        // Key was already added from the first object
+        if (k in final) {
+            // Go a level deeper if this is an object
+            if (typeof (v) == "object" && !Array.isArray(v)) {
+                final[k] = mergeObjects(obj1[k], v)
+            }
+            continue
+        }
+
+        // Key didn't already exist, write it
+        final[k] = v
+    }
+
+    return final
+}
 
 export default class Settings extends SettingsOld {
     constructor(moduleName, defaultConfig, colorSchemePath, titleText) {
