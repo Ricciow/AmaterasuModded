@@ -17,7 +17,6 @@ export default class SearchElement extends SearchElementOld {
         this.selected = false
         this.sliderAdded = false
         this.matches = null
-        this.hasSearched = false
 
         this.rightBlock = new ScrollComponent("no elements found", 5.0)
             .setX((1).pixel())
@@ -51,5 +50,59 @@ export default class SearchElement extends SearchElementOld {
         this.searchBar
             ._create(this.handler.colorScheme)
             .setChildOf(this.parentClass.searchBarBg)
+    }
+
+    _onKeyType(string) {
+        // Return & reset if the focus has been lost
+        if (!this.selected) return this._reset()
+
+        // Return & reset if the string is empty
+        if (!string) return this._reset()
+
+        this.config = {}
+        this.rightBlock.clearChildren()
+        this.createElementClass.subcategories.clear()
+        this.createElementClass?._hideDropDownComps()
+        this.createElementClass.elements = []
+
+        this.matches = [
+            {
+                "category": this.categoryName,
+                "settings": []
+            }
+        ]
+
+        this.oldConfig.forEach(mainObj => {
+
+            mainObj.settings.forEach(obj => {
+                if (this.matches[0].settings.some(someObj => someObj.name.toLowerCase() === obj.name.toLowerCase())) return
+
+                const text = obj.text.toLowerCase()
+                const description = obj.description.toLowerCase()
+                const tags = obj.tags
+
+                if (!(
+                    text.includes(string.toLowerCase()) ||
+                    description.includes(string.toLowerCase()) ||
+                    (tags?.length && tags.some(it => it.toLowerCase().includes(string.toLowerCase())))
+                )) return
+
+                this.matches[0].settings.push(obj)
+            })
+
+        })
+
+        this.parentClass._hideAll()
+        this.rightBlock.unhide(true)
+        this.config = this.matches
+
+        this.createElementClass._create()
+    }
+
+    _reset() {
+        this.rightBlock.hide()
+        this.parentClass._unhideAll()
+
+        return this
     }
 }
