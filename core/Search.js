@@ -1,6 +1,6 @@
 import SearchElementOld from "../../Amaterasu/core/Search"
 import { ScrollComponent, UIRoundedRectangle } from "../../Elementa"
-import TextInputElement from "../../DocGuiLib/elements/TextInput"
+import TextInputElement from "../docGuiLib/TextInputElement"
 import CreateElement from "./CreateElement"
 import ElementUtils from "../../DocGuiLib/core/Element"
 
@@ -104,5 +104,16 @@ export default class SearchElement extends SearchElementOld {
         this.parentClass._unhideAll()
 
         return this
+    }
+
+    _hide() {
+        this.setText("")
+        this.searchBar.placeholderText.unhide(true)
+        super._hide()
+    }
+
+    setText(str) {
+        this.searchBar.setText(str)
+        this._onKeyType(str)
     }
 }

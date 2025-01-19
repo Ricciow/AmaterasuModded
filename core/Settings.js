@@ -240,7 +240,7 @@ export default class Settings extends SettingsOld {
      * - Unhides the previously selected category
      * - Currently only used by [SearchBar]
      */
-    _unhideAll(unselectSearch = false) {
+    _unhideAll() {
         this.categories.get(this.currentCategory)._setSelected(true)
 
         this.searchBar._removeSlider()

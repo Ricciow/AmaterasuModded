@@ -42,6 +42,8 @@ export default class Category extends CategoryOld {
                 new SiblingConstraint(3)
             )
             .onMouseClickEvent(() => {
+                // Hide Search if it is being shown
+                this.parentClass.searchBar._hide()
                 // Avoid hiding this element incase it's the only one being shown
                 if (this.parentClass.currentCategory && this.parentClass.currentCategory === this.categoryName) return
 
