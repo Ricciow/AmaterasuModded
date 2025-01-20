@@ -112,8 +112,8 @@ export default class SearchElement extends SearchElementOld {
         super._hide()
     }
 
-    setText(str) {
+    setText(str, triggerKeyType = false) {
         this.searchBar.setText(str)
-        this._onKeyType(str)
+        if(triggerKeyType) this._onKeyType(str)
     }
 }
